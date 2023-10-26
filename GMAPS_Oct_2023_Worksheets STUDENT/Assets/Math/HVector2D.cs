@@ -75,11 +75,10 @@ public class HVector2D
         return projection;
     }
 
-    public float FindAngle(float dotProduct)
+    public static float FindAngle(float dotProduct)
     {
-        double angleRadian = Math.Acos(dotProduct);
-        double angleDegree = angleRadian * (180.0 / Math.PI);
-
+        float angleRadian = Mathf.Acos(dotProduct);
+        float angleDegree = angleRadian * Mathf.Rad2Deg;
         return (float)angleDegree;
     }
 

@@ -24,28 +24,33 @@ public class MarioHVector2D : MonoBehaviour
 
     void FixedUpdate()
     {
+        //getting the directions
         gravityDir = new HVector2D(planet.position - transform.position);
         moveDir = new HVector2D(gravityDir.y, -gravityDir.x);
 
+        //flip the move direction so mario moves clockwise
         moveDir = moveDir.normalized * -1f;
         rb.AddForce(moveDir.ToUnityVector3() * force);
 
+        //normalize the gravity
         gravityNorm = gravityDir.normalized;
         rb.AddForce(gravityNorm.ToUnityVector3() * gravityStrength);
 
-        dot = up.DotProduct(gravityDir);
-        angle = up.FindAngle(dot);
+        //getting the angle to rotate mario as he travels around the planet
+        HVector2D right = new(Vector3.right);
+        dot = right.DotProduct(moveDir);
+        angle = HVector2D.FindAngle(dot);
         if (angle > prevAngle)
         {
-            Debug.Log("1");
             rb.MoveRotation(Quaternion.Euler(0, 0, -angle));
         }
         else if (angle < prevAngle)
         {
-            Debug.Log("2");
             rb.MoveRotation(Quaternion.Euler(0, 0, angle));
         }
         prevAngle = angle;
+
+        
 
         DebugExtension.DebugArrow(transform.position, gravityDir.ToUnityVector3(), Color.red);
         DebugExtension.DebugArrow(transform.position, moveDir.ToUnityVector3(), Color.blue);

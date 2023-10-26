@@ -19,19 +19,21 @@ public class Mario : MonoBehaviour
 
     void FixedUpdate()
     {
+        //getting the directions for each forces
         gravityDir = planet.position - transform.position;
-
         moveDir = new(gravityDir.y, -gravityDir.x);
-        moveDir = moveDir.normalized * -1f;
 
+        //flipping the move diretion for mario to make him move clockwise
+        moveDir = moveDir.normalized * -1f;
         rb.AddForce(moveDir * force);
+
+        //normalize gravity and apply gravity force
         gravityNorm = gravityDir.normalized;
         rb.AddForce(gravityNorm * gravityStrength);
 
-        float angle = Vector3.SignedAngle(-Vector3.up,gravityNorm, Vector3.forward);
-        Debug.Log(angle);
+        float angle = Vector3.SignedAngle(Vector3.right,moveDir, Vector3.forward);
         rb.MoveRotation(Quaternion.Euler(0,0,angle));
-        DebugExtension.DebugArrow(transform.position, Vector3.up, Color.yellow);
+
         DebugExtension.DebugArrow(transform.position, gravityDir, Color.red);
         DebugExtension.DebugArrow(transform.position, moveDir, Color.blue);
     }
