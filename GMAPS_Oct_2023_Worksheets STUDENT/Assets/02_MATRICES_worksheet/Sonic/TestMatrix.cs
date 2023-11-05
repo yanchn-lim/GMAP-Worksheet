@@ -1,16 +1,24 @@
-//// Uncomment this whole file.
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+public class TestMatrix : MonoBehaviour
+{
+    HMatrix2D mat1 = new(5, 32, 6, 42, 643, 67, 423,5,21);
+    HMatrix2D mat2 = new(5, 2, 7, 8, 6, 5, 4, 6,5);
+    HVector2D vec = new(5, 3);
+    // Start is called before the first frame update
+    void Start()
+    {
+        Question2();
+    }
 
-//public class TestMatrix : MonoBehaviour
-//{
-//    private HMatrix2D mat = new HMatrix2D();
+    void Question2()
+    {
+        HMatrix2D result = mat1 * mat2;
+        HVector2D res = mat1 * vec;
+        result.Print();
 
-//    void Start()
-//    {
-
-//    }
-
-//}
+        Debug.Log($"{res.x}  ,{res.y}");
+    }
+}
