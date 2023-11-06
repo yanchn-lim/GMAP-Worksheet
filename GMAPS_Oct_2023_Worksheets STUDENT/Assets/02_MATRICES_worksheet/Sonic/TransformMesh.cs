@@ -23,7 +23,7 @@ public class TransformMesh : MonoBehaviour
         meshManager = GetComponent<MeshManager>();
         pos = new HVector2D(gameObject.transform.position.x, gameObject.transform.position.y);
 
-        Translate(5, 2);
+        Rotate(45);
     }
 
 
@@ -38,10 +38,12 @@ public class TransformMesh : MonoBehaviour
 
     void Rotate(float angle)
     {
+        toOriginMatrix.SetTranslationMat(-pos.x,-pos.y);
+        fromOriginMatrix.SetTranslationMat(pos.x, pos.y);
+       
+        rotateMatrix.SetRotationMat(angle);
         transformMatrix.SetIdentity();
-
-        transformMatrix.SetRotationMat(angle);
-        transformMatrix = fromOriginMatrix * rotateMatrix * toOriginMatrix;
+        transformMatrix = toOriginMatrix * rotateMatrix * fromOriginMatrix;
 
         Transform();
     }
