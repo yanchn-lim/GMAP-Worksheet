@@ -186,10 +186,9 @@ public class HMatrix2D
 
     public void SetTranslationMat(float transX, float transY)
     {
-        entries[0, 0] += transX;
-        entries[0, 1] += transY;
-        entries[1, 0] += transX;
-        entries[0, 1] += transY;
+        SetIdentity();
+        entries[0, 2] = transX;
+        entries[1, 2] = transY;
     }
 
     public void SetRotationMat(float rotDeg)
@@ -206,8 +205,6 @@ public class HMatrix2D
     {
         SetIdentity();
         entries[0, 0] *= scaleX;
-        entries[0, 1] *= scaleY;
-        entries[1, 0] *= scaleX;
         entries[1, 1] *= scaleY;
     }
 

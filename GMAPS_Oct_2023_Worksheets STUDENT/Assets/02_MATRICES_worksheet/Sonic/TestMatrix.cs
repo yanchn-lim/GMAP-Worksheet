@@ -19,6 +19,11 @@ public class TestMatrix : MonoBehaviour
         HVector2D res = mat1 * vec;
         result.Print();
 
-        Debug.Log($"{res.x}  ,{res.y}");
+        result.SetTranslationMat(1,1);
+        result.Print();
+
+        result.SetRotationMat(1);
+        result.Print();
+        //Debug.Log($"{res.x}  ,{res.y}");
     }
 }
