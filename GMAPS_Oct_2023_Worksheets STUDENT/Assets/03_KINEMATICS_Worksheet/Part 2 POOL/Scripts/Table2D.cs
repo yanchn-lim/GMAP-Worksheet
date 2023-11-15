@@ -11,26 +11,26 @@ public class Table2D : MonoBehaviour
 
     }
 
-    //bool CheckBallCollision(Ball2D toCheck)
-    //{
-    //    //for (int i = 0; i < balls.Count; i++)
-    //    {
-    //        Ball2D ball = balls[1];
+    bool CheckBallCollision(Ball2D toCheck)
+    {
+        for (int i = 0; i < balls.Count; i++)
+        {
+            Ball2D ball = balls[i];
 
-    //        if (ball.IsCollidingWith(toCheck) && toCheck != ball)
-    //        {
-    //            return true;
-    //        }
-    //    }
+            if (ball.IsCollidingWith(toCheck) && toCheck != ball)
+            {
+                return true;
+            }
+        }
 
-    //    return false;
-    //}
+        return false;
+    }
 
-    //private void FixedUpdate()
-    //{
-    //    if (CheckBallCollision(balls[0]))
-    //    {
-    //        Debug.Log("COLLISION!");
-    //    }
-    //}
+    private void FixedUpdate()
+    {
+        if (CheckBallCollision(balls[0]))
+        {
+            Debug.Log("COLLISION!");
+        }
+    }
 }

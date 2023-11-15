@@ -31,6 +31,7 @@ public class Ball2D : MonoBehaviour
     public bool IsCollidingWith(Ball2D other)
     {
         float distance = Util.FindDistance(Position, other.Position);
+
         return distance <= Radius + other.Radius;
     }
 
