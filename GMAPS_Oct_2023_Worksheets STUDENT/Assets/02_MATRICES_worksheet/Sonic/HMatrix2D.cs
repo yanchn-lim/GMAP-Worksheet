@@ -10,7 +10,7 @@ public class HMatrix2D
 
     public HMatrix2D()
     {
-        // your code here
+        SetIdentity();
     }
 
     public HMatrix2D(float[,] multiArray)
@@ -91,28 +91,10 @@ public class HMatrix2D
     // Note that the second argument is a HVector2D object
     public static HVector2D operator *(HMatrix2D left, HVector2D right)
     {
-        HVector2D result = new();
-        for (int i = 0; i < left.entries.GetLength(0); i++)
-        {
-            float r = 0;
-            for (int j = 0; j < left.entries.GetLength(1); j++)
-            {
-                if (j == 0)
-                    r += right.x * left.entries[i, j];
-
-                if (j == 1)
-                    r += right.y * left.entries[i, j];
-
-                if (j == 2)
-                    r += right.h * left.entries[i, j];
-            }
-            if (i == 0)
-                result.x = r;
-
-            if (i == 1)
-                result.y = r;
-        }
-        return result;
+        return new HVector2D(
+                left.entries[0,0] * right.x + left.entries[0,1] * right.y + left.entries[0,2] * right.h,
+                left.entries[1, 0] * right.x + left.entries[1, 1] * right.y + left.entries[1, 2] * right.h
+            );
     }
 
     // Note that the second argument is a HMatrix2D object
