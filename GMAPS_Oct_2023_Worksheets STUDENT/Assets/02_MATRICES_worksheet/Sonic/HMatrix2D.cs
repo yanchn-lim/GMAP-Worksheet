@@ -6,13 +6,16 @@ using UnityEngine;
 
 public class HMatrix2D
 {
+    //creating a multidimensional array
     public float[,] entries { get; set; } = new float[3, 3];
 
+    //instancing the matrix without any parameter should just create an identity matrix
     public HMatrix2D()
     {
         SetIdentity();
     }
 
+    //setting our multi-dimensional array "entries" with the one inputted in the parameters
     public HMatrix2D(float[,] multiArray)
     {
         for (int i = 0; i < entries.GetLength(0); i++)
@@ -24,6 +27,7 @@ public class HMatrix2D
         }
     }
 
+    //setting each entries in our multi-dimensional array
     public HMatrix2D(float m00, float m01, float m02,
              float m10, float m11, float m12,
              float m20, float m21, float m22)
@@ -45,9 +49,12 @@ public class HMatrix2D
 
     }
 
+    //overloading the + operator for our matrix class
     public static HMatrix2D operator +(HMatrix2D left, HMatrix2D right)
     {
         HMatrix2D newMatrix = new();
+
+        //loops through the 2 dimensions of the arrays and adds up each entries
         for (int i = 0; i < left.entries.GetLength(0); i++)
         {
             for (int j = 0; j < left.entries.GetLength(1); j++)
@@ -59,9 +66,12 @@ public class HMatrix2D
         return newMatrix;
     }
 
+    //overloading the - operator for our matrix class
     public static HMatrix2D operator -(HMatrix2D left, HMatrix2D right)
     {
         HMatrix2D newMatrix = new();
+
+        //loops through the 2 dimensions of the arrays and subtracts each entries
         for (int i = 0; i < left.entries.GetLength(0); i++)
         {
             for (int j = 0; j < left.entries.GetLength(1); j++)
@@ -73,9 +83,12 @@ public class HMatrix2D
         return newMatrix;
     }
 
+    //overloading the * operator for our matrix class
     public static HMatrix2D operator *(HMatrix2D left, float scalar)
     {
         HMatrix2D newMatrix = new();
+
+        //loops through our entries and multiply them with the scalar
         for (int i = 0; i < left.entries.GetLength(0); i++)
         {
             for (int j = 0; j < left.entries.GetLength(1); j++)
@@ -91,6 +104,8 @@ public class HMatrix2D
     // Note that the second argument is a HVector2D object
     public static HVector2D operator *(HMatrix2D left, HVector2D right)
     {
+        //doing matrix multiplication for our 3x3 and the 3x1 vector
+        
         return new HVector2D(
                 left.entries[0,0] * right.x + left.entries[0,1] * right.y + left.entries[0,2] * right.h,
                 left.entries[1, 0] * right.x + left.entries[1, 1] * right.y + left.entries[1, 2] * right.h
@@ -100,6 +115,7 @@ public class HMatrix2D
     // Note that the second argument is a HMatrix2D object
     public static HMatrix2D operator *(HMatrix2D left, HMatrix2D right)
     {
+        //doing matrix multiplication for 3x3 and 3x3 matrices
         return new HMatrix2D
         (
             left.entries[0, 0] * right.entries[0, 0] + left.entries[0, 1] * right.entries[1, 0] + left.entries[0, 2] * right.entries[2, 0],
@@ -116,8 +132,12 @@ public class HMatrix2D
         );
     }
 
+
     public static bool operator ==(HMatrix2D left, HMatrix2D right)
     {
+
+        //loops through the matrices' entries and compare them to see if they are the same
+        //if any entry is different then it would return false
         for (int i = 0; i < left.entries.GetLength(0); i++)
         {
             for (int j = 0; i < left.entries.GetLength(1); i++)
@@ -132,6 +152,8 @@ public class HMatrix2D
 
     public static bool operator !=(HMatrix2D left, HMatrix2D right)
     {
+        //loops through the matrices' entries and compare them to see if they are different
+        //if any entry is different then it would return false
         for (int i = 0; i < left.entries.GetLength(0); i++)
         {
             for (int j = 0; i < left.entries.GetLength(1); i++)
@@ -156,6 +178,8 @@ public class HMatrix2D
 
     public void SetIdentity()
     {
+
+        //goes through the entries and set 1 to the diagonal of the matrix
         for (int y = 0; y < entries.GetLength(1); y++)
         {
             for (int x = 0; x < entries.GetLength(0); x++)
@@ -168,15 +192,23 @@ public class HMatrix2D
 
     public void SetTranslationMat(float transX, float transY)
     {
+        //set identity first
         SetIdentity();
+
+        //places the translation entries in their respective positions
         entries[0, 2] = transX;
         entries[1, 2] = transY;
     }
 
     public void SetRotationMat(float rotDeg)
     {
+        //set identity first
         SetIdentity();
+
+        //convert the input which is in degree to radian
         float rad = rotDeg * Mathf.Rad2Deg;
+
+        //set the rotation 
         entries[0, 0] = Mathf.Cos(rad);
         entries[0, 1] = -Mathf.Sin(rad);
         entries[1, 0] = Mathf.Sin(rad);
@@ -185,7 +217,10 @@ public class HMatrix2D
 
     public void SetScalingMat(float scaleX, float scaleY)
     {
+        //set identity first
         SetIdentity();
+
+        //set the scaling matrix in their respective entries
         entries[0, 0] *= scaleX;
         entries[1, 1] *= scaleY;
     }

@@ -9,6 +9,7 @@ public class JumpToHeight : MonoBehaviour
 
     private void Start()
     {
+        //get rigidbody 
         rb = GetComponent<Rigidbody>();
     }
 
@@ -21,11 +22,15 @@ public class JumpToHeight : MonoBehaviour
         //u = sqrt(v*v - 2as)
         // v = 0, u = ?, a = Physics.gravity, s = Height
 
-        float u = Mathf.Sqrt(-2*Physics.gravity.magnitude*Height);
-        rb.velocity = new Vector3(0,0,0);
+        //since v = 0, we ignore the v*v of the equation
+        //we substitute the values that we have from the -2as part
+        //into the Mathf.Sqrt to get the velocity needed for the cube to reach the
+        //desired height
+        float u = Mathf.Sqrt(-2 * Physics.gravity.y * Height);
+        rb.velocity = new Vector3(0,u,0);
 
-        float jumpForce = Mathf.Sqrt(-2 * Physics2D.gravity.y * Height);
-        rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+        //float jumpForce = Mathf.Sqrt(-2 * Physics2D.gravity.y * Height);
+        //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
     }
 
     private void Update()

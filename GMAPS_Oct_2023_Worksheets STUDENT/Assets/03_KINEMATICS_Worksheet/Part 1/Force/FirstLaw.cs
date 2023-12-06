@@ -9,7 +9,10 @@ public class FirstLaw : MonoBehaviour
 
     void Start()
     {
+        //get the rigidbody of the object
         rb = GetComponent<Rigidbody>();
+
+        //apply the force specified
         rb.AddForce(force);
      }
 

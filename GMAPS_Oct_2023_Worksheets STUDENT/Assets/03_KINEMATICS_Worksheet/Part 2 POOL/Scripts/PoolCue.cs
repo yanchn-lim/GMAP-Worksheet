@@ -17,28 +17,42 @@ public class PoolCue : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
+            //get the position of the mouse translated to world point
             var startLinePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Start line drawing
+            
+            //check if the ball is colliding with our mouse
             if (ball != null && ball.IsCollidingWith(startLinePos.x,startLinePos.y))
             {
+                //draw the line from the ball's center to our mouse
                 drawnLine = lineFactory.GetLine(ball.transform.position, startLinePos, 1, Color.white);
                 drawnLine.EnableDrawing(true);
             }
         }
+        //when the mouse get released
         else if (Input.GetMouseButtonUp(0) && drawnLine != null)
         {
             drawnLine.EnableDrawing(false);
 
-            //update the velocity of the white ball.
+            //translate our end position of our mouse to worldpoint
             var releasePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             
+            //subtracting the ball's position from our release point would give
+            //us the direction in which we want the ball to travel
+            //which is the opposite direction of the direction we dragged
+            //our mouse
             HVector2D v = new HVector2D(ball.transform.position-releasePos);
+
+            //applying the vector we got to the velocity
+            //this means the further we drag our mouse, the faster the ball would travel
             ball.Velocity = v;
 
             drawnLine = null; // End line drawing            
         }
 
+        //update the end position of the line to follow the mouse
         if (drawnLine != null)
         {
             drawnLine.end = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Update line end
